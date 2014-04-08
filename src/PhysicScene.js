@@ -4,6 +4,8 @@ var PhysicScene = cc.Scene.extend({
     initPhysics:function() {
         
         this.space = new cp.Space();
+
+        this.space.gravity = cp.v(0, -650);
        
 
     },
