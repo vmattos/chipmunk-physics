@@ -46,8 +46,27 @@ var PhysicScene = cc.Scene.extend({
 [/code]
 
 Pronto! Agora ja temos um objeto representando o espaço.
+Perceba que passamos o objeto <em>space</em> como parâmetro no construtor do layer!
+
 Para setarmos a força da gravidade em nosso espaço, podemos usar:
 
 [code language='javascript']
 this.space.gravity = cp.v(0, -650);
+[/code]
+
+Criaremos agora o <strong>GameLayer<strong>:
+
+[code language='javascript']
+var GameLayer = cc.Layer.extend({
+
+    ctor : function(space){
+        this._super();
+        this.space = space;
+        this.init();
+    },
+
+    init:function(){
+        this._super();
+    },
+});
 [/code]
