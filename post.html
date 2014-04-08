@@ -11,9 +11,38 @@ Baixe a biblioteca do Cocos2d-JS na <a href='http://www.cocos2d-x.org/download' 
 
 Diversos tutoriais básicos sobre Cocos2d podem ser encontrados na <a href='http://www.cocos2d-x.org/wiki/Cocos2d-JS' target='_blank'>página da documentação</a>
 
-Para começarmos a usar a engine de física do Chipmunk2D, temos que declarar nas configurações do Cocos2d que usaremos o chipmunk. Para isso, abra o arquivo <strong>cocos2d.js</strong> e altere a seguinte configuração: 
+Para começarmos a usar a engine de física do Chipmunk2D, temos que declarar nas configurações do Cocos2d que usaremos o chipmunk. Para isso, alteramos <strong>cocos2d.js</strong> adicionamos a seguinte instrução: 
 
 [code language="javascript"]
 chipmunk:true,
 [/code]
 
+Agora toda vez que carregarmos o Cocos2d, o jsloader carregará também a biblioteca do Chipmunk2D.
+
+Para de fato usarmos a física em uma cena, precisamos de um objeto chamado <strong>space</strong>.
+É comum criarmos um método na cena que iniciará todas as configurações de física:
+
+[code language='javascript']
+var PhysicScene = cc.Scene.extend({
+    space: null,
+
+    initPhysics:function() {
+        this.space = new cp.Space();
+    },
+
+    onEnter:function () {
+        this._super();
+        this.initPhysics();
+        var layer = new GameLayer(this.space);
+        this.addChild(layer);
+
+        this.scheduleUpdate();
+    },
+
+    update: function(dt) {
+        this.space.step(dt);
+    }
+});
+[/code]
+
+Pronto! Agora ja temos um objeto representando o espaço.
