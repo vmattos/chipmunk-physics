@@ -74,6 +74,8 @@ Representaremos esse corpo com o sprite de uma bola:
 
 [TODO IMAGEM]
 
+Basta salvar esse arquivo no diretório <em>res/Normal/</em>
+
 Para isso, no <strong>GameLayer</strong> criaremos o sprite da bola e o associaremos a um corpo físico:
 
 [code language='javascript']
@@ -102,3 +104,28 @@ init:function(){
 [/code]
 
 Rode a aplicação e verifique o resultado.
+A bola está passando desaparecendo tela! Precisamos criar um chão para que ela permaneça na área visível.
+
+Vamos criar 4 paredes, uma em cada lado da tela, transformando a área jogável em uma espécie de "caixa".
+No metodo <strong>initPhysics</striong>, que está no PhysicScene:
+
+[code language='javascript']
+var winSize = cc.Director.getInstance().getWinSize();
+
+var staticBody = this.space.staticBody;
+
+var paredes = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),               // bottom
+    new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
+    new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
+    new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
+];
+
+for( var i=0; i < paredes.length; i++ ) {
+    var forma = paredes[i];
+    forma.setElasticity(1);
+    forma.setFriction(1);
+    this.space.addStaticShape( forma );
+}
+[/code]
+
+Agora nossa bola bate no chão e quica!

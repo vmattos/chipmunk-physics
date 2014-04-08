@@ -7,9 +7,22 @@ var PhysicScene = cc.Scene.extend({
 
         this.space.gravity = cp.v(0, -650);
 
-        this._debugNode = cc.PhysicsDebugNode.create(this.space);
-        this.addChild(this._debugNode, 10);
+        var winSize = cc.Director.getInstance().getWinSize();
+
+        var staticBody = this.space.staticBody;
        
+       var paredes = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),               // bottom
+            new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),    // top
+            new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),             // left
+            new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)  // right
+            ];
+
+        for( var i=0; i < paredes.length; i++ ) {
+            var forma = paredes[i];
+            forma.setElasticity(1);
+            forma.setFriction(1);
+            this.space.addStaticShape( forma );
+        }
 
     },
     onEnter:function () {
