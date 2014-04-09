@@ -68,5 +68,10 @@ var GameLayer = cc.Layer.extend({
         corpo.setPos(cp.v(s.width/2, s.height/2));
 
         ball.setBody(corpo)
+
+        var forcaX = (Math.random() * 5000) - 4000;
+        var forcaY = 3000;
+
+        corpo.applyImpulse(cp.v(forcaX, forcaY), cp.v(0, 0));
     },
 });

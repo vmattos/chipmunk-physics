@@ -83,8 +83,8 @@ init:function(){
     this._super();
 
     // cc.PhysicsSprite cria um sprite que representará um corpo
-    var ball = cc.PhysicsSprite.create("ball.png");
-    this.addChild(ball);
+    var bola = cc.PhysicsSprite.create("ball.png");
+    this.addChild(bola);
 
     var raio = 32;
 
@@ -99,7 +99,7 @@ init:function(){
     var s = cc.Director.getInstance().getWinSize();
     corpo.setPos(cp.v(s.width/2, s.height/2));
 
-    ball.setBody(corpo)
+    bola.setBody(corpo)
 },
 [/code]
 
@@ -129,3 +129,11 @@ for( var i=0; i < paredes.length; i++ ) {
 [/code]
 
 Agora nossa bola bate no chão e quica!
+Podemos facilmente aplicar um impulso ao corpo. Na função init do <strong>GameLayer</strong>:
+
+[code language='javascript']
+var forcaX = -4000;
+var forcaY = 3000;
+
+corpo.applyImpulse(cp.v(forcaX, forcaY), cp.v(0, 0));
+[/code]
